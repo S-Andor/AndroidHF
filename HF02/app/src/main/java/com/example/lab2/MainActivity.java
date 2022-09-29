@@ -1,5 +1,6 @@
 package com.example.lab2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,9 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
+    TextView txt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +26,32 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(asd);
             }
         });
+
+        txt = findViewById(R.id.txtHello);
+
+        if(savedInstanceState != null){
+            txt.setText(savedInstanceState.getString("KEY"));
+        }
+        txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txt.append("\n Hello");
+            }
+        });
     }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("KEY", txt.getText().toString());
+
+        super.onSaveInstanceState(outState);
+    }
+/*
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        txt.setText(savedInstanceState.getString("KEY"));
+        super.onRestoreInstanceState(savedInstanceState);
+    }*/
 
     @Override
     protected void onStart() {
